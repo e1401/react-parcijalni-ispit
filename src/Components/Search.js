@@ -23,22 +23,25 @@ export default class Search extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(apiURL)
+        if (this.state.value.length === 0) {
+            alert('The search box is empty')
+            return;
+
+        } else {
+            this.setState({value: ''})
+        }
 
         fetch(apiURL + this.state.value)
             
-            // .then(response => response.json())
-            // .then(apiData => this.props.dataToGo(apiData));
+            
             .then(res => res.json())
             .then(value => this.setState({valueFromApi: value}))
-            // .then(this.setState({value: ''}))
-            // .then(this.setState)
+            
             
         
             fetch(apiURL + this.state.value +'/repos')
             
-            // .then(response => response.json())
-            // .then(apiData => this.props.dataToGo(apiData));
+            
             .then(res => res.json())
             .then(value => this.setState({valueFromRepos: value}))
             .then(this.setState({value: ''}))
