@@ -7,10 +7,10 @@ export default class Search extends Component {
         super(props);
 
         this.state = {
-            key: '',
+            // key: '',
             value: '',
-            valueFromUsers: {},
-            //future value from repos
+            valueFromApi: {},
+            valueFromRepos:[]
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,31 +18,48 @@ export default class Search extends Component {
 
     handleChange(event) {
         this.setState({value: event.target.value})
-        console.log(this.state)
+        
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
+        console.log(apiURL)
 
         fetch(apiURL + this.state.value)
+            
+            // .then(response => response.json())
+            // .then(apiData => this.props.dataToGo(apiData));
             .then(res => res.json())
+            .then(value => this.setState({valueFromApi: value}))
+            // .then(this.setState({value: ''}))
+            // .then(this.setState)
+            
         
-            .then(value => this.setState({valueFromUsers: value}))
+            fetch(apiURL + this.state.value +'/repos')
+            
+            // .then(response => response.json())
+            // .then(apiData => this.props.dataToGo(apiData));
+            .then(res => res.json())
+            .then(value => this.setState({valueFromRepos: value}))
+            .then(this.setState({value: ''}))
 
             console.log(this.state)
+
+            
     }
 
     
     render() {
         return (
             <div>
-                <form>
-                    <label onSubmit={this.handleSubmit}>
-                        <input type='text' value={this.state.value} onChange={this.handleChange} />
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
-                    <input type='submit' value='Submit search'></input>
+                    <input type="submit" value="Submit search"></input>
+                    
                 </form>
-                <Results />
+                <Results val={this.state.valueFromApi} valFromRepos={this.state.valueFromRepos} />
             </div>
         )
     }
