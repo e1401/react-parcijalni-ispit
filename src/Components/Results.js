@@ -31,9 +31,9 @@ const Results = (props) => {
 
                 <div key={Math.random()}>
                     <img src={avatar_url} alt="Avatar" />
-                    <p>Name: {name}</p>
-                    <p>Short bio: {bio}</p>
-                    <p>Location: {location}</p>
+                    <p> <span className="strong">Name:</span> {name}</p>
+                    <p><span className="strong">Short bio:</span> {bio}</p>
+                    <p><span className="strong">Location:</span> {location}</p>
                 </div>
 
                 <div key={Math.random()}>
